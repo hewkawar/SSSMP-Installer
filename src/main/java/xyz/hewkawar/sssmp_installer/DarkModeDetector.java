@@ -1,4 +1,4 @@
-package net.hypercubemc.iris_installer;
+package xyz.hewkawar.sssmp_installer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

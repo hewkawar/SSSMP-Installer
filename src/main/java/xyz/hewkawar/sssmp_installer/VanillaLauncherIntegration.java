@@ -1,8 +1,7 @@
-package net.hypercubemc.iris_installer;
+package xyz.hewkawar.sssmp_installer;
 
 import mjson.Json;
 import net.fabricmc.installer.client.ProfileInstaller;
-import net.fabricmc.installer.util.Reference;
 import net.fabricmc.installer.util.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
