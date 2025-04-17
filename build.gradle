@@ -45,7 +45,7 @@ task downloadBootstrap(type: Download) {
 }
 
 task nativeExe(dependsOn: [downloadBootstrap], type: FileOutput) {
-    output = file("${projectDir}/build/libs/${archivesBaseName}-${project.version}.exe")
+    output = file("${projectDir}/build/libs/${archivesBaseName}.exe")
     outputs.upToDateWhen { false }
 
     doFirst {
