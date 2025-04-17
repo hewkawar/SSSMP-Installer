@@ -47,7 +47,7 @@ public class VanillaLauncherIntegration {
         Files.createFile(dummyJar);
         URL profileUrl = new URL("https://meta.fabricmc.net/" + (String.format("v2/versions/loader/%s/%s/profile/json", gameVersion, loaderVersion)));
         Json profileJson = Json.read(profileUrl);
-        if (loaderName.equals("iris-fabric-loader")) {
+        if (loaderName.equals("sssmp-fabric-loader")) {
             editVersionJson(profileJson, modsFolder);
         }
         Utils.writeToFile(profileJsonPath, profileJson.toString());
@@ -57,10 +57,10 @@ public class VanillaLauncherIntegration {
         Json.Factory factory = Json.factory();
         Map<String, Json> json = profileJson.asJsonMap();
         // Replace fabric-loader-etc with iris-fabric-loader-etc
-        json.compute("id", (ignored, existing) -> factory.string("iris-" + existing.asString()));
+        json.compute("id", (ignored, existing) -> factory.string("sssmp-" + existing.asString()));
 
         // Add the JVM argument -Diris.installer=true so Iris can detect if the installer is used
-        json.getOrDefault("arguments", Json.array()).asJsonMap().getOrDefault("jvm", Json.array()).asJsonList().add(factory.string("-Diris.installer=true"));
+        json.getOrDefault("arguments", Json.array()).asJsonMap().getOrDefault("jvm", Json.array()).asJsonList().add(factory.string("-Dsssmp.installer=true"));
         json.getOrDefault("arguments", Json.array()).asJsonMap().getOrDefault("jvm", Json.array()).asJsonList().add(factory.string("-Dfabric.modsFolder=" + modsFolder.toAbsolutePath().toString()));
     }
 
@@ -125,7 +125,7 @@ public class VanillaLauncherIntegration {
         }
 
         try {
-            InputStream is = Utils.class.getClassLoader().getResourceAsStream("iris_profile_icon.png");
+            InputStream is = Utils.class.getClassLoader().getResourceAsStream("sssmp_icon.png");
 
             String var4;
             try {
