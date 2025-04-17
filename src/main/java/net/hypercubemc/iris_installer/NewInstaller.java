@@ -40,7 +40,7 @@ public class NewInstaller extends JFrame {
     private boolean installAsMod;
     private String outdatedPlaceholder = "Warning: We have ended support for <version>.";
     private String snapshotPlaceholder = "Warning: <version> is a snapshot build and may";
-    private String BASE_URL = "https://raw.githubusercontent.com/IrisShaders/Iris-Installer-Files/master/";
+    private String BASE_URL = "https://raw.githubusercontent.com/hewkawar/SSSMP-Installer-Files/master/";
     private boolean finishedSuccessfulInstall;
     private InstallerMeta.Version selectedVersion;
     private final List<InstallerMeta.Version> GAME_VERSIONS;
@@ -51,7 +51,7 @@ public class NewInstaller extends JFrame {
      * Creates new form Installer
      */
     public NewInstaller() {
-        super("Iris Installer");
+        super("SSSMP Installer");
         Main.LOADER_META = new MetaHandler(("v2/versions/loader"));
 
         try {
@@ -144,9 +144,9 @@ public class NewInstaller extends JFrame {
     public String getStorageDirectoryName() {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains("mac")) {
-            return "iris-installer";
+            return "sssmp-installer";
         } else {
-            return ".iris-installer";
+            return ".sssmp-installer";
         }
     }
 
@@ -173,7 +173,7 @@ public class NewInstaller extends JFrame {
                 ZipEntry entry = zipIn.getNextEntry();
                 // iterates over entries in the zip file
                 if (!installAsMod) {
-                    getInstallDir().resolve(betaSelection.isSelected() ? "iris-beta-reserved/" : "iris-reserved/").toFile().mkdir();
+                    getInstallDir().resolve("sssmp-reserved/").toFile().mkdir();
                 }
 
                 getInstallDir().resolve("shaderpacks").toFile().mkdir();
@@ -182,7 +182,7 @@ public class NewInstaller extends JFrame {
                     String entryName = entry.getName();
 
                     if (!installAsMod && entryName.startsWith("mods/")) {
-                        entryName = entryName.replace("mods/", (betaSelection.isSelected() ? "iris-beta-reserved/" : "iris-reserved/") + selectedVersion + "/");
+                        entryName = entryName.replace("mods/", "sssmp-reserved/" + selectedVersion + "/");
                     }
 
                     File filePath = getInstallDir().resolve(entryName).toFile();
@@ -238,7 +238,7 @@ public class NewInstaller extends JFrame {
         installButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("iris_profile_icon.png"))).getImage());
+        setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("sssmp_icon.png"))).getImage());
         setMaximumSize(new java.awt.Dimension(480, 600));
         setMinimumSize(new java.awt.Dimension(480, 600));
         setPreferredSize(new java.awt.Dimension(480, 600));
@@ -247,8 +247,8 @@ public class NewInstaller extends JFrame {
 
         irisInstallerLabel.setFont(irisInstallerLabel.getFont().deriveFont((float)36));
         irisInstallerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        irisInstallerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iris_profile_icon.png"))); // NOI18N
-        irisInstallerLabel.setText(" Iris & Sodium");
+        irisInstallerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sssmp_icon.png"))); // NOI18N
+        irisInstallerLabel.setText(" SSSMP");
         irisInstallerLabel.setMaximumSize(new java.awt.Dimension(350, 64));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -258,7 +258,7 @@ public class NewInstaller extends JFrame {
 
         gameVersionLabel.setFont(gameVersionLabel.getFont().deriveFont(gameVersionLabel.getFont().getStyle() | java.awt.Font.BOLD, 16));
         gameVersionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        gameVersionLabel.setText("Select game version:");
+        gameVersionLabel.setText("Select version:");
         gameVersionLabel.setToolTipText("");
         gameVersionLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gameVersionLabel.setMaximumSize(new java.awt.Dimension(300, 24));
@@ -330,8 +330,8 @@ public class NewInstaller extends JFrame {
         installType.add(standaloneType);
         standaloneType.setFont(standaloneType.getFont().deriveFont((float)16));
         standaloneType.setSelected(true);
-        standaloneType.setText("Iris Only");
-        standaloneType.setToolTipText("This installs Iris and Sodium by itself, without any mods.");
+        standaloneType.setText("Standard");
+        standaloneType.setToolTipText("This installs SSSMP's mods without others mods.");
         standaloneType.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 standaloneTypeMouseClicked(evt);
@@ -341,8 +341,8 @@ public class NewInstaller extends JFrame {
 
         installType.add(fabricType);
         fabricType.setFont(fabricType.getFont().deriveFont((float)16));
-        fabricType.setText("Iris + Fabric");
-        fabricType.setToolTipText("This installs Iris and Sodium alongside an installation of Fabric.");
+        fabricType.setText("Custom");
+        fabricType.setToolTipText("This installs SSSMP's mods alongside an installation of Fabric.");
         fabricType.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 fabricTypeMouseClicked(evt);
@@ -357,7 +357,7 @@ public class NewInstaller extends JFrame {
         getContentPane().add(installationTypesContainer, gridBagConstraints);
 
         gameVersionList.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        gameVersionList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1.19", "1.18.2", "1.17.1", "1.16.5" }));
+        gameVersionList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
         gameVersionList.setMaximumSize(new java.awt.Dimension(168, 35));
         gameVersionList.setMinimumSize(new java.awt.Dimension(168, 35));
         gameVersionList.setPreferredSize(new java.awt.Dimension(168, 35));
@@ -480,16 +480,15 @@ public class NewInstaller extends JFrame {
     }//GEN-LAST:event_fabricTypeMouseClicked
 
     private void installButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_installButtonMouseClicked
-        String loaderName = installAsMod ? "fabric-loader" : "iris-fabric-loader";
+        String loaderName = installAsMod ? "fabric-loader" : "sssmp-fabric-loader";
 
         try {
-            URL loaderVersionUrl = new URL("https://raw.githubusercontent.com/IrisShaders/Iris-Installer-Maven/master/latest-loader");
-            String profileName = installAsMod ? "Fabric Loader " : (betaSelection.isSelected() ? "Iris " + INSTALLER_META.getBetaSnippet() + " BETA for " : "Iris & Sodium for ");
+            String profileName = installAsMod ? "Fabric Loader " : "SSSMP for ";
             VanillaLauncherIntegration.Icon profileIcon = installAsMod ? VanillaLauncherIntegration.Icon.FABRIC : VanillaLauncherIntegration.Icon.IRIS;
-            Path modsFolder0 = installAsMod ? getInstallDir().resolve("mods") : getInstallDir().resolve(betaSelection.isSelected() ? "iris-beta-reserved/" : "iris-reserved/").resolve(selectedVersion.name);
+            Path modsFolder0 = installAsMod ? getInstallDir().resolve("mods") : getInstallDir().resolve("sssmp-reserved/").resolve(selectedVersion.name);
 
             String loaderVersion = Main.LOADER_META.getLatestVersion(false).getVersion();
-            boolean success = VanillaLauncherIntegration.installToLauncher(this, getVanillaGameDir(), getInstallDir(), modsFolder0, profileName + selectedVersion.name, selectedVersion.name, loaderName, loaderVersion, profileIcon);
+            boolean success = VanillaLauncherIntegration.installToLauncher(this, getVanillaGameDir(), getInstallDir(), modsFolder0, profileName + selectedVersion.name, "1.21.5", loaderName, loaderVersion, profileIcon);
             if (!success) {
                 System.out.println("Failed to install to launcher, canceling!");
                 return;
@@ -513,8 +512,8 @@ public class NewInstaller extends JFrame {
         progressBar.setForeground(new Color(76, 135, 200));
         progressBar.setValue(0);
 
-        String zipName = (betaSelection.isSelected() ? "Iris-Sodium-Beta" : "Iris-Sodium") + "-" + selectedVersion.name + ".zip";
-        String downloadURL = "https://github.com/IrisShaders/Iris-Installer-Files/releases/latest/download/" + zipName;
+        String zipName = "SSSMP" + "-" + selectedVersion.name + ".zip";
+        String downloadURL = "https://github.com/hewkawar/SSSMP-Installer-Files/releases/latest/download/" + zipName;
         File saveLocation = getStorageDirectory().resolve(zipName).toFile();
 
         final Downloader downloader = new Downloader(downloadURL, saveLocation);
@@ -548,7 +547,7 @@ public class NewInstaller extends JFrame {
                     installDir.mkdir();
                 }
 
-                File modsFolder = installAsMod ? getInstallDir().resolve("mods").toFile() : getInstallDir().resolve(betaSelection.isSelected() ? "iris-beta-reserved/" : "iris-reserved/").resolve(selectedVersion.name).toFile();
+                File modsFolder = installAsMod ? getInstallDir().resolve("mods").toFile() : getInstallDir().resolve("sssmp-reserved/").resolve(selectedVersion.name).toFile();
                 File[] modsFolderContents = modsFolder.listFiles();
 
                 if (modsFolderContents != null) {
